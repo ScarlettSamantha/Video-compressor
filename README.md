@@ -1,44 +1,70 @@
 # Video Compressor
 
-Video Compressor is a Python script that compresses a video to a specific size using FFmpeg. It provides a progress bar, logs the compression process, and allows for additional FFmpeg arguments to be passed.
-
-## Requirements
-
-- Python 3.7 or later
-- FFmpeg
-
-Python dependencies are listed in the `requirements.txt` file and can be installed with `pip`:
-
-```bash
-pip install -r requirements.txt
-```
-
-The dependencies include:
-
-- `tqdm`: A fast, extensible progress bar for Python.
+This script compresses a video file to a specified size using FFmpeg. It calculates the required bitrate for the output file based on its duration and the target size, starts the FFmpeg process to compress the video, and displays a progress bar using tqdm.
 
 ## Usage
 
-To use Video Compressor, run the following command:
+You can run the script with the following arguments:
+
+- `--input_file`: The input video file. (required)
+- `--output_file`: The output video file. (required)
+- `--max_size_mb`: The maximum size of the output video file in MB. (required)
+- `--log_dir`: The directory to write logs to. (optional, default is "logs")
+- `-a` or `--additional_ffmpeg_args`: Additional FFmpeg arguments. (optional)
+- `-v` or `--verbosity`: Increase output verbosity. Use `-vv` or `-vvv` for more verbosity. (optional)
+- `--cpu_limit`: Limit the number of CPU cores used by FFmpeg. (optional)
+
+### Example Commands
 
 ```bash
-python script.py <input_file> <output_file> <max_size_mb> <log_dir> -a <additional_ffmpeg_args>
+# Compress a video with minimal verbosity
+python main.py --input_file input.mp4 --output_file output.mp4 --max_size_mb 500
+
+# Compress a video with medium verbosity
+python main.py -v --input_file input.mp4 --output_file output.mp4 --max_size_mb 500
+
+# Compress a video with maximum verbosity
+python main.py -vvv --input_file input.mp4 --output_file output.mp4 --max_size_mb 500
+
+# Limit the number of CPU cores used by FFmpeg
+python main.py --input_file input.mp4 --output_file output.mp4 --max_size_mb 500 --cpu_limit 4
 ```
 
-Where:
+## Installation
 
-- `<input_file>` is the input video file.
-- `<output_file>` is the output video file.
-- `<max_size_mb>` is the maximum size of the output video file in MB.
-- `<log_dir>` is the directory to write logs to.
-- `<additional_ffmpeg_args>` (optional) are additional FFmpeg arguments.
+This script requires FFmpeg to be installed on your system.
 
-For example:
+### Ubuntu
+
+You can install FFmpeg on Ubuntu with the following command:
 
 ```bash
-python script.py input.mp4 output.mp4 490 logs -a "-vf 'scale=1280:-1'"
+sudo apt update
+sudo apt install ffmpeg
 ```
 
-This command will compress `input.mp4` into `output.mp4`, aiming for a maximum size of 490 MB, write logs to the `logs` directory, and scale the video resolution to 1280x720.
+### Fedora
 
-Enjoy compressing your videos!
+On Fedora, use this command:
+
+```bash
+sudo dnf install ffmpeg
+```
+
+### macOS
+
+On macOS, you can use Homebrew:
+
+```bash
+brew install ffmpeg
+```
+
+### Windows
+
+On Windows, you can download FFmpeg from the [official website](https://ffmpeg.org/download.html#build-windows) and add it to your system's PATH.
+
+## Dependencies
+
+This script requires Python 3.6 or later and the following Python packages:
+
+- tqdm
